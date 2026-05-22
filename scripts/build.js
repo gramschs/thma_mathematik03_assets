@@ -20,6 +20,7 @@ const ENTRIES = [
   { chapter: 'chapter11', name: 'chap11_sec03_quiz' },
   { chapter: 'chapter11', name: 'chap11_sec04_quiz' },
   { chapter: 'chapter11', name: 'chap11_sec03_schwingung' },
+  { chapter: 'chapter11', name: 'chap11_sec03_systemparameter' },
   // { chapter: 'chapter11', name: 'chap11_sec02_quiz' },
 ]
 
