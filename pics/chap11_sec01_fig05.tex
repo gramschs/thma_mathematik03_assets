@@ -1,0 +1,98 @@
+\documentclass[11pt]{standalone}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[no-math]{fontspec}
+\usepackage{unicode-math}
+\usepackage{libertinus}
+\usepackage{pgf,xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\definecolor{my_darkgray}{HTML}{484949}
+\definecolor{my_lightgray}{HTML}{F3F4F4}
+\definecolor{my_darkblue}{HTML}{005A94}
+\definecolor{my_lightblue}{HTML}{CCDEE9}
+\definecolor{my_yellow}{HTML}{FFEC7F}
+\definecolor{my_red}{HTML}{E60000}
+\definecolor{my_orange}{HTML}{E87846}
+
+\begin{document}
+
+\begin{tikzpicture}[
+    show background rectangle,
+    background rectangle/.style={fill=my_lightgray, rounded corners=8pt},
+    inner frame sep=0.8cm
+]
+
+\begin{axis}[
+    width = 12cm,
+    height = 6cm,
+    axis lines = center,
+    axis line style = {thick},
+    xlabel = {$t~[\text{s}]$},
+    ylabel = {$y(t)~[\text{m}]$},
+    xlabel style = {font=\small},
+    ylabel style = {font=\small},
+    ticklabel style = {font=\small},
+    grid = both,
+    minor grid style = {draw=my_lightblue},
+    major grid style = {draw=my_darkgray!60},
+    xmin = 0,
+    xmax = 5,
+    ymin = 0,
+    ymax = 4.6,
+    legend style = {
+        font=\small,
+        at={(0.97,0.97)},
+        anchor=north east,
+        draw=none,
+        fill=none,
+        /tikz/every even column/.style={column sep=0.5em}
+    },
+    legend cell align = left,
+    % axis equal hier bewusst weggelassen, damit die unterschiedlichen
+    % Abklingraten der drei Beiträge in y-Richtung gut sichtbar sind.
+]
+
+% Parameterwahl für die Visualisierung:
+% C1 = 1, C2 = 1  ->  y_h(t) = e^{-t} + e^{-2t}
+% y_p(t) = (5/2) e^{-3t}
+% y(t)   = y_h(t) + y_p(t)
+
+% Homogener (transienter) Anteil y_h(t)
+\addplot[
+    draw = my_darkblue,
+    ultra thick,
+    samples = 300,
+    domain = 0:5
+]
+{exp(-x) + exp(-2*x)};
+\addlegendentry{$y_h(t) = C_1 e^{-t} + C_2 e^{-2t}$};
+
+% Partikulärer (erzwungener) Anteil y_p(t)
+\addplot[
+    draw = my_red,
+    ultra thick,
+    samples = 300,
+    domain = 0:5
+]
+{2.5*exp(-3*x)};
+\addlegendentry{$y_p(t) = \tfrac{5}{2}\,e^{-3t}$};
+
+% Gesamtlösung y(t) = y_h(t) + y_p(t)
+\addplot[
+    draw = my_orange,
+    ultra thick,
+    samples = 300,
+    domain = 0:5
+]
+{exp(-x) + exp(-2*x) + 2.5*exp(-3*x)};
+\addlegendentry{$y(t) = y_h(t) + y_p(t)$};
+
+\end{axis}
+
+\end{tikzpicture}
+
+\end{document}
