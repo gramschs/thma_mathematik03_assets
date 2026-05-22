@@ -12,7 +12,7 @@
   const pool = [
     {
       text: `Welche Kräfte gehen in die Bewegungsgleichung
-             ${tex('m\\,y\\\'\\\'= F_{\\\\text{ges}}')} eines
+             ${tex("m\\,y'' = F_{\\text{ges}}")} eines
              Feder-Masse-Dämpfer-Systems ein?`,
       options: [
         `Nur Federkraft ${tex('-k\\,y')}`,
@@ -22,7 +22,7 @@
         `Nur Dämpferkraft ${tex("-d\\,y'")}`,
       ],
       correct: 2,
-      explanation: `Alle drei Kräfte zusammen ergeben ${tex('m\\,y\\\'\\\'= -k\\,y - d\\,y\\\'+ F(t)')}.
+      explanation: `Alle drei Kräfte zusammen ergeben ${tex("m\\,y'' = -k\\,y - d\\,y' + F(t)")}.
         Division durch ${tex('m')} liefert die Standardform der ODE.`,
     },
     {
