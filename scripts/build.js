@@ -16,6 +16,9 @@ const ENTRIES = [
   { chapter: 'chapter06', name: 'chap06_kurvenschar'   },
   { chapter: 'chapter06', name: 'chap06_richtungsfeld' },
   { chapter: 'chapter11', name: 'chap11_sec01_quiz'    },
+  { chapter: 'chapter11', name: 'chap11_sec02_quiz' },
+  { chapter: 'chapter11', name: 'chap11_sec03_quiz' },
+  { chapter: 'chapter11', name: 'chap11_sec04_quiz' },
   // { chapter: 'chapter11', name: 'chap11_sec02_quiz' },
 ]
 
