@@ -30,7 +30,7 @@ for (const { chapter, name } of ENTRIES) {
       plugins:  [svelte(), viteSingleFile()],
       logLevel: 'silent',
       build: {
-        outDir:      resolve(ROOT, `interactive/${chapter}`),
+        outDir: resolve(ROOT, 'interactive'),
         emptyOutDir: false,
         rollupOptions: {
           input: resolve(ROOT, `src/${chapter}/${name}.html`),
