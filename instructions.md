@@ -286,3 +286,76 @@ git push        # GitHub Actions / GitHub Pages übernimmt automatisch
 | Eintrag `build.js` | ✓ | ✓ |
 | Eintrag `src/index.html` | ✓ | ✓ |
 | Overlay-Snippet in `.md` | – | ✓ |
+
+---
+
+## SVG-Größe und Lesbarkeit auf Smartphones
+
+Die Hälfte der Studierenden liest das Skript auf dem Smartphone (~380 px
+Viewport). SVGs mit `width: 100%` skalieren proportional zum Container – die
+`viewBox`-Dimensionen bestimmen daher indirekt die Schriftgröße auf dem
+Bildschirm.
+
+### Das Problem mit großen viewBox-Werten
+
+Ein SVG mit `viewBox="0 0 680 340"` in einem Container mit `max-width: 720px`
+rendert auf dem Desktop bei ~688 px (Skalierungsfaktor ≈ 1). Auf einem
+Smartphone mit 380 px Viewport stehen nach Padding nur ~348 px zur Verfügung
+(Faktor ≈ 0.51). Ein Label mit `font-size="12"` wird dann mit ~6 px gerendert –
+zu klein.
+
+### Empfohlene Lösung
+
+**viewBox:** `W = 420`, `H = 280` (Seitenverhältnis 3:2).  
+**CSS auf dem SVG:** `max-width: 452px`, damit das SVG auf dem Desktop nicht
+über die natürliche Koordinatengröße hinaus skaliert.
+
+```css
+.chart-wrap svg {
+  width: 100%;
+  max-width: 452px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+```
+
+Das ergibt folgende Skalierungsfaktoren:
+
+| Gerät | Verfügbare Breite | Faktor | `font-size="14"` → |
+|---|---|---|---|
+| Smartphone (380 px) | 348 px | 0.83 | ≈ 11.6 px ✓ |
+| Tablet / Desktop | 452 px | 1.08 | ≈ 15 px ✓ |
+
+### Schriftgrößen im SVG
+
+| Verwendung | `font-size` |
+|---|---|
+| Achsenbeschriftung (`t (s)`, `y (mm)`) | `14` |
+| Tick-Labels, Klammerbeschriftung | `13` |
+| Sekundäre Annotationen (Formeln, Hinweise) | `12` |
+
+Werte unter `12` vermeiden – sie werden auf dem Smartphone nicht mehr lesbar.
+
+### Plot-Rand (Padding im Koordinatensystem)
+
+Richtwerte für `W = 420`, `H = 280`:
+
+```javascript
+const PL = 44;   // links  – Platz für y-Tick-Labels
+const PR = 412;  // rechts – 8 px Luft
+const PT = 32;   // oben   – Platz für Klammern / Annotationen
+const PB = 248;  // unten  – Platz für x-Tick-Labels und Achsentitel
+```
+
+### Seitenverhältnis wählen
+
+Das Seitenverhältnis richtet sich nach dem Inhalt, nicht nach einem fixen
+Standard:
+
+- **Funktionsgraph (eine Kurve, t-Achse):** 3:2 → `W = 420`, `H = 280`
+- **Phasen- oder Vektordiagramm (quadratischer Inhalt):** 1:1 → `W = H = 340`
+- **Zwei-Panel-Layout (Mechanik links, Graph rechts):** 2:1 → `W = 680`,
+  `H = 340`; in diesem Fall `max-width` weglassen, da die zwei Panels die
+  Breite rechtfertigen.
+
