@@ -1,5 +1,5 @@
 // scripts/build.js
-// Baut jede App einzeln – nötig, weil vite-plugin-singlefile
+// Baut jede App einzeln - nötig, weil vite-plugin-singlefile
 // (inlineDynamicImports: true) nicht mit mehreren Rollup-Inputs verträglich ist.
 
 import { build }          from 'vite'
@@ -13,6 +13,7 @@ const ROOT      = resolve(__dirname, '..')
 
 // ── Alle Apps hier eintragen ──────────────────────────────────────────────────
 const ENTRIES = [
+  { chapter: 'chapter05', name: 'chap05_sec03_projektion' },
   { chapter: 'chapter06', name: 'chap06_kurvenschar'   },
   { chapter: 'chapter06', name: 'chap06_richtungsfeld' },
   { chapter: 'chapter11', name: 'chap11_sec01_quiz'    },
